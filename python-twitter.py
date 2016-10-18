@@ -28,7 +28,7 @@ api = twitter.Api(consumer_key='cpbEnrZDyEgKru5MjsalZpuaK',
                   access_token_key='732265260183228417-EyVi0GOOZth4Zci7SlaYxtFHWXydlyT',
                   access_token_secret='1oUdLnRImsgzajYZxz1ABoBpUB8euauFsadIEBt16YAB9')
                   
-## Use date.time to get todays date
+## Use date.time to get yesterday's date
 today = datetime.date.today()
 yesterday = today - datetime.timedelta(days=1)
                   
