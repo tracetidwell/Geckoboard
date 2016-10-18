@@ -1,4 +1,33 @@
 # Geckoboard
 Geckoboard Support Engineer Challenge
 
-In this repository you'll find my twitter2.js file, which contains code that pulls data from Twitter and send it to Geckoboard. Unfortunately, I couldn't quite get it to work as planned. I kept having issues storing the response from Twitter in a variable that I could then send to Geckoboard. The code didn't seem to execute in the order I needed it to. I am not super comfortable with JavaScript, but I believe the issue lies in how JS hoists certain function and variable declarations. In order to complete the challenge, I would need to use a while loop to cycle through all pages of responses by pulling the next_cursor object from the response. Once the value of next_cursor = 0, there are no more pages of results. Upon completion of the while loop, I would send a count of the IDs to Geckoboard. In the code for sending data to Geckoboard, I hardcoded a number, but everything else seemed to work fine in that regard. In order to automate the process of updating the dashboard, I also looked into changing the chrontab settings, so that the program will execute even when not running. I also explored using the Task Manager for a Windows computer. Although I was unable to complete the task, this was my first crack at anything like this, and I think I came very close. With just a few changes, I believe everything would work as planned.
+In this repository you'll find python-twitter.py, gb_mention_count.js, and gb_follower_count.js. These contain the code that pulls data from Twitter and sends it to Geckoboard. The code is fairly self-explanatory, but I'll walk through it here very quickly.
+
+## python-twitter.py
+* Import the libraries needed. Twitter allows me to connect to the Twitter API, execute_js allows me execute JavaScript files from with the Python environment, and datetime gives me today's date
+* Create an instance of the Twitter API using the login credentials given me by Twitter
+* Using datetime, get today's date and  yesterday's date, which will be using for searching tweets
+* Use the GetSearch method to search Twitter for tweets containing the word Geckoboard from yesterday
+* Count the tweets and store it as a number
+* Create the arguments that need to be passed the gb_mention_count.js file
+* Execute the gb_mention_file with the arguments
+* Use the GetSFollowerIDs method to get the User IDs of the followers of @geckoboard
+* Count the followers and store it as a number
+* Create the argument that need to be passed the gb_follower_count.js file
+* Execute the gb_follower_file with the argument
+
+## gb_mention_count
+* Use the yargs package to parse the argument
+* Assign the variables mention_count and date from the passed arguments
+* Use the API key from Geckoboard to connect
+* Create the twitter_mentions dataset with the mentions and date fields
+* Post the mentions_count and date to the dataset (this appends the dataset)
+
+## gb_follower_count
+* Use the yargs package to parse the argument
+* Assign the variable follower_count from the passed argument
+* Use the API key from Geckoboard to connect
+* Create the twitter_followers dataset with the followers
+* Put the followers_count to the dataset (this overwrites the dataset)
+
+I also automated this process by scheudling a task with Task Scheduler on my Windows machine. It will run at 12:01 am each day, so that the previous day's totals are there at the start of each day. I'm sure there some things that could be done to clean this up. I probably could have combined the two JavaScript files into one, and might could have gotten everything into the Python file. All in all, though, I am pretty happy with the final result.
